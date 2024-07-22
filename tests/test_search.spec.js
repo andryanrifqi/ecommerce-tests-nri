@@ -8,9 +8,10 @@ test('Verify search box functionality', async ({ page }) => {
   await page.fill('input[name="q"]', config.SEARCH_TERM);
   await page.press('input[name="q"]', 'Enter');
   await page.waitForSelector('.products-grid');
-  const productTitles = await page.$$eval('.product-item-name a', elements => elements.map(el => el.textContent));
+  const products = await page.$$eval('//div[@class=\'products wrapper grid products-grid\']//div/strong/a', 
+    elements => elements.map(el => el.textContent));
 
-  for (const title of productTitles) {
-    expect(title.toLowerCase()).toContain(config.SEARCH_TERM.toLowerCase());
+  for (const product of products) {
+    expect(product).toContain(config.SEARCH_TERM);
   }
 });
