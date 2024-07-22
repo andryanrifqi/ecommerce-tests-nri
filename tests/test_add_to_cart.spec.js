@@ -15,7 +15,7 @@ test('Verify add to cart functionality', async ({ page }) => {
   await page.click('//div[@id=\'option-label-size-143-item-170\']');
   const sizeLabel = await page.locator('//div[@id=\'option-label-size-143-item-170\']').textContent();
   await page.click('//div[@id=\'option-label-color-93-item-57\']');
-  const colorLabel = await page.locator('//div[@id=\'option-label-color-93-item-57\']').textContent();
+  const colorLabel = await page.locator('//div[@id=\'option-label-color-93-item-57\']').getAttribute('option-label');
   const qtyLabel = await page.locator('//input[@id=\'qty\']').getAttribute('value');
   await page.click('#product-addtocart-button');
   await page.waitForSelector('.message-success');
@@ -28,7 +28,7 @@ test('Verify add to cart functionality', async ({ page }) => {
   const size = await page.locator('//dd[contains(text(),\'XL\')]').textContent();
   const color = await page.locator('//dd[contains(text(),\'Purple\')]').textContent();
   const quantity = await page.locator('//*[@data-role="cart-item-qty"]').getAttribute('value');
-  
+ 
   expect(size).toContain(sizeLabel);
   expect(color).toContain(colorLabel);
   expect(quantity).toEqual(qtyLabel);
