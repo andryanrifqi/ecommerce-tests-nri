@@ -27,7 +27,7 @@ test('Verify add to cart functionality', async ({ page }) => {
 
   const size = await page.locator('//dd[contains(text(),\'XL\')]').textContent();
   const color = await page.locator('//dd[contains(text(),\'Purple\')]').textContent();
-  const quantity = await page.locator('//input[@id=\'cart-205907-qty\']').getAttribute('value');
+  const quantity = await page.locator('//*[@data-role="cart-item-qty"]').getAttribute('value');
   console.log(quantity);
   
   expect(size).toEqual(sizeLabel)
