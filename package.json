@@ -1,0 +1,25 @@
+{
+  "name": "ecommerce-tests-nri",
+  "version": "1.0.0",
+  "description": "This is an online test for Test Engineer position in NRI",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andryanrifqi/ecommerce-tests-nri.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andryanrifqi/ecommerce-tests-nri/issues"
+  },
+  "homepage": "https://github.com/andryanrifqi/ecommerce-tests-nri#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.45.2",
+    "@types/node": "^20.14.11"
+  }
+}
