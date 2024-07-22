@@ -16,6 +16,7 @@ test('Verify add to cart functionality', async ({ page }) => {
   const sizeLabel = await page.locator('//div[@id=\'option-label-size-143-item-170\']').textContent();
   await page.click('//div[@id=\'option-label-color-93-item-57\']');
   const colorLabel = await page.locator('//div[@id=\'option-label-color-93-item-57\']').textContent();
+  const qtyLabel = await page.locator('//input[@id=\'qty\']').getAttribute('value');
   await page.click('#product-addtocart-button');
   await page.waitForSelector('.message-success');
 
@@ -23,21 +24,21 @@ test('Verify add to cart functionality', async ({ page }) => {
   expect(notification).not.toBeNull();
 
   await page.goto(config.BASE_URL + 'checkout/cart');
-  const cartItem = await page.$('.cart-item');
 
   const size = await page.locator('//dd[contains(text(),\'XL\')]').textContent();
   const color = await page.locator('//dd[contains(text(),\'Purple\')]').textContent();
   const quantity = await page.locator('//*[@data-role="cart-item-qty"]').getAttribute('value');
-  console.log(quantity);
   
-  expect(size).toEqual(sizeLabel)
-  expect(color).toEqual(colorLabel)
-  expect(quantity).toBe('1');
+  expect(size).toContain(sizeLabel);
+  expect(color).toContain(colorLabel);
+  expect(quantity).toEqual(qtyLabel);
 
-  await cartItem.fill('.input-text.qty', '2');
-  await page.click('button.update-cart-item');
+  const subtotal1 = await page.locator('//span[@data-bind="text: getValue(), attr: {\'data-th\': title}"]').textContent();
+
+  await page.fill('//*[@data-role="cart-item-qty"]', '2');
+  await page.click('//button[@title=\'Update Shopping Cart\']');
   await page.waitForLoadState('networkidle');
 
-  const subtotal = await cartItem.$eval('.subtotal .price', el => parseFloat(el.textContent.replace('$', '')));
-  expect(subtotal).toBeGreaterThan(0);
+  const subtotal2 = await page.locator('//span[@data-bind="text: getValue(), attr: {\'data-th\': title}"]').textContent();
+  expect(subtotal2).not.toEqual(subtotal1);
 });
